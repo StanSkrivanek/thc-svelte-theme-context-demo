@@ -1,4 +1,5 @@
 <script lang="ts">
+	import ThemeProvider from '$lib/theme/ThemeProvider.svelte'
 	import favicon from '$lib/assets/favicon.svg';
 	import Header from '$lib/components/Header.svelte';
 	import Sidebar from '$lib/components/Sidebar.svelte';
@@ -36,20 +37,22 @@
 <svelte:head>
 	<link rel="icon" href={favicon} />
 </svelte:head>
-<ToastProvider position="top-center" defaultDuration={5000} maxToasts={5}>
-	<div class="app-layout">
-		<Header />
-		<div class="app-body">
-			<Sidebar />
-			<main class="main-content">
-				{@render children()}
-			</main>
+<ThemeProvider>
+	<ToastProvider position="top-center" defaultDuration={5000} maxToasts={5}>
+		<div class="app-layout">
+			<Header />
+			<div class="app-body">
+				<Sidebar />
+				<main class="main-content">
+					{@render children()}
+				</main>
+			</div>
 		</div>
-	</div>
-
-	<!-- Viewport renders all toasts -->
-	<ToastViewport />
-</ToastProvider>
+		
+		<!-- Viewport renders all toasts -->
+		<ToastViewport />
+	</ToastProvider>
+</ThemeProvider>
 
 <style>
 	.app-layout {

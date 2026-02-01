@@ -1,4 +1,5 @@
 <script lang="ts">
+	import ThemeSelector from "$lib/theme/ThemeSelector.svelte";
 	let activeLink = 'home';
 
 	const links = [
@@ -28,6 +29,8 @@
 		{/each}
 	</ul>
 </nav>
+
+<ThemeSelector />
 
 <style>
 	.navigation {

@@ -15,16 +15,54 @@
     --bg: #ffffff;
     --text: #111111;
     --link: #1a0dab;
-}
-html,
-body {
-	height: 100%;
+	--link-hover: #551a8b;
+
+/* Default (light) theme colors */
+	--color-background: #ffffff;
+	--color-surface: #f8fafc;
+	--color-surface-hover: #f1f5f9;
+	--color-foreground: #0f172a;
+	--color-foreground-muted: #475569;
+	--color-foreground-subtle: #94a3b8;
+	--color-primary: #2563eb;
+	--color-primary-hover: #1d4ed8;
+	--color-primary-foreground: #ffffff;
+	--color-success: #16a34a;
+	--color-warning: #ca8a04;
+	--color-error: #dc2626;
+	--color-info: #0284c7;
+	--color-border: #e2e8f0;
+	--color-border-focus: #3b82f6;
+	--color-shadow: rgba(0, 0, 0, 0.1);
 }
 
-html {
-	/* font-family: var(--font-system-ui); */
+/* Dark theme overrides */
+:root[data-theme='dark'] {
+	--color-background: #0f172a;
+	--color-surface: #1e293b;
+	--color-surface-hover: #334155;
+	--color-foreground: #f8fafc;
+	--color-foreground-muted: #cbd5e1;
+	--color-foreground-subtle: #64748b;
+	--color-primary: #3b82f6;
+	--color-primary-hover: #60a5fa;
+	--color-primary-foreground: #ffffff;
+	--color-success: #22c55e;
+	--color-warning: #eab308;
+	--color-error: #ef4444;
+	--color-info: #0ea5e9;
+	--color-border: #334155;
+	--color-border-focus: #60a5fa;
+	--color-shadow: rgba(0, 0, 0, 0.4);
+}
+
+/* Ensure html/body use theme colors immediately */
+html,
+body {
+	margin: 0;
+	background-color: var(--color-background);
+	color: var(--color-foreground);
 	font-family: var(--font-regular);
-	color: var(--text);
 	accent-color: var(--link);
 	background: var(--bg);
 	background-attachment: fixed;
@@ -33,4 +71,6 @@ html {
 	scroll-behavior: smooth;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+	height: 100%;
 }
+
