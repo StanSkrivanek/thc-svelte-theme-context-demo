@@ -59,45 +59,6 @@
 	<h2>Regular Content</h2>
 	<p>This card follows the page theme.</p>
 </ThemedCard>
-<ThemeProvider forceTheme="dark">
-	<ThemedCard>
-		<h2>Featured Content</h2>
-		<p>This card is always dark, even on a light page.</p>
-	</ThemedCard>
-</ThemeProvider>
-<!-- Single mode: only one item open at a time -->
-<!-- <Accordion single defaultExpanded={['item-1']}>
-		<AccordionItem id="item-1">
-			<AccordionTrigger itemId="item-1">What is your return policy?</AccordionTrigger>
-			<AccordionContent itemId="item-1">
-				<p>
-					We offer a 30-day return policy for all unused items in their original packaging. Simply
-					contact our support team to initiate a return.
-				</p>
-			</AccordionContent>
-		</AccordionItem>
-
-		<AccordionItem id="item-2">
-			<AccordionTrigger itemId="item-2">How long does shipping take?</AccordionTrigger>
-			<AccordionContent itemId="item-2">
-				<p>
-					Standard shipping takes 5-7 business days. Express shipping is available for 2-3 business
-					day delivery.
-				</p>
-			</AccordionContent>
-		</AccordionItem>
-
-		<AccordionItem id="item-3">
-			<AccordionTrigger itemId="item-3">Do you ship internationally?</AccordionTrigger>
-			<AccordionContent itemId="item-3">
-				<p>
-					Yes! We ship to over 50 countries. International shipping typically takes 10-14 business
-					days.
-				</p>
-			</AccordionContent>
-		</AccordionItem>
-	</Accordion> -->
-
 <div class="grid">
 	<!-- Works standalone -->
 	<Card title="Hello World">
@@ -114,6 +75,46 @@
 		<p>Border and shadow adjust for dark backgrounds.</p>
 	</Card>
 </div>
+
+<ThemeProvider forceTheme="dark">
+	<ThemedCard>
+		<h2>Featured Content</h2>
+		<p>This card is always dark, even on a light page.</p>
+	</ThemedCard>
+</ThemeProvider>
+
+<!-- Single mode: only one item open at a time -->
+<!-- <Accordion single defaultExpanded={['item-1']}>
+		<AccordionItem id="item-1">
+			<AccordionTrigger itemId="item-1">What is your return policy?</AccordionTrigger>
+			<AccordionContent itemId="item-1">
+				<p>
+					We offer a 30-day return policy for all unused items in their original packaging. Simply
+					contact our support team to initiate a return.
+					</p>
+					</AccordionContent>
+					</AccordionItem>
+					
+					<AccordionItem id="item-2">
+						<AccordionTrigger itemId="item-2">How long does shipping take?</AccordionTrigger>
+						<AccordionContent itemId="item-2">
+							<p>
+								Standard shipping takes 5-7 business days. Express shipping is available for 2-3 business
+								day delivery.
+								</p>
+								</AccordionContent>
+								</AccordionItem>
+								
+								<AccordionItem id="item-3">
+									<AccordionTrigger itemId="item-3">Do you ship internationally?</AccordionTrigger>
+									<AccordionContent itemId="item-3">
+										<p>
+											Yes! We ship to over 50 countries. International shipping typically takes 10-14 business
+											days.
+											</p>
+											</AccordionContent>
+											</AccordionItem>
+											</Accordion> -->
 
 <!-- <Tabs defaultTab="overview" onTabChange={handleTabChange} orientation="horizontal">
 		<TabList>
