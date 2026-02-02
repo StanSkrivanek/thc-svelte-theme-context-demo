@@ -1,9 +1,9 @@
 <script lang="ts">
-	import ThemeProvider from '$lib/theme/ThemeProvider.svelte'
 	import favicon from '$lib/assets/favicon.svg';
 	import Header from '$lib/components/Header.svelte';
 	import Sidebar from '$lib/components/Sidebar.svelte';
 	import { ToastProvider, ToastViewport } from '$lib/components/toast';
+	import ThemeProvider from '$lib/theme/ThemeProvider.svelte';
 	import type { Snippet } from 'svelte';
 	import { setContext } from 'svelte';
 	import '../app.css';
@@ -48,7 +48,7 @@
 				</main>
 			</div>
 		</div>
-		
+
 		<!-- Viewport renders all toasts -->
 		<ToastViewport />
 	</ToastProvider>

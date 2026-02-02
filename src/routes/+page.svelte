@@ -55,34 +55,47 @@
 	</div>
 </div> -->
 <!-- This card uses the page's theme -->
-<ThemedCard>
+<!-- <ThemedCard>
 	<h2>Regular Content</h2>
 	<p>This card follows the page theme.</p>
-</ThemedCard>
-<div class="grid">
+</ThemedCard> -->
+<!-- <div class="grid"> -->
 	<!-- Works standalone -->
-	<Card title="Hello World">
+	<!-- <Card title="Hello World">
 		<p>This card uses default styling.</p>
-	</Card>
+	</Card> -->
 
 	<!-- Adapts to theme context -->
-	<Card title="Themed Card" variant="primary">
+	<!-- <Card title="Themed Card" variant="primary">
 		<p>This card uses your app's primary color.</p>
-	</Card>
+	</Card> -->
 
 	<!-- Inside a dark-themed section -->
-	<Card title="Dark Mode" subtitle="Automatically adapts">
+	<!-- <Card title="Dark Mode" subtitle="Automatically adapts">
 		<p>Border and shadow adjust for dark backgrounds.</p>
-	</Card>
-</div>
-
+	</Card> -->
+<!-- </div> -->
+<!-- 
 <ThemeProvider forceTheme="dark">
 	<ThemedCard>
 		<h2>Featured Content</h2>
 		<p>This card is always dark, even on a light page.</p>
 	</ThemedCard>
-</ThemeProvider>
-
+</ThemeProvider> -->
+<!-- This section forces dark theme -->
+ <div class="page">
+	<ThemeProvider forceTheme="dark">
+		<section class="promo-card">
+			<h2>Featured Content</h2>
+			<p>This card is always dark, even on a light page.</p>
+		</section>
+	</ThemeProvider>
+		<!-- This follows the page theme -->
+	<section class="regular-card">
+		<h2>Regular Content</h2>
+		<p>This card follows the page theme.</p>
+	</section>
+</div>
 <!-- Single mode: only one item open at a time -->
 <!-- <Accordion single defaultExpanded={['item-1']}>
 		<AccordionItem id="item-1">
@@ -179,5 +192,14 @@
 
 	button:hover {
 		background: #2563eb;
+	}
+
+	.promo-card, .regular-card {
+		background-color: var(--color-surface);
+		color: var(--color-foreground);
+		border: 1px solid var(--color-border);
+		padding: 1.5rem;
+		border-radius: 12px;
+		margin: 1rem 0;
 	}
 </style>

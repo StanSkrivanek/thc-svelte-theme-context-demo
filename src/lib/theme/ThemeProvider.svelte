@@ -1,44 +1,33 @@
 <!-- src/lib/theme/ThemeProvider.svelte -->
 <script lang="ts">
-	import { createThemeContext } from './theme-context.svelte.ts';
-	import type { ResolvedTheme } from './types';
+	import { createThemeContext } from './theme-context.svelte.js'
+	import type { ResolvedTheme } from './types.js'
+	import type { Snippet } from 'svelte'
 
 	interface Props {
-		/** Force a specific theme (for local overrides) */
-		forceTheme?: ResolvedTheme;
-		/** Custom storage key for localStorage */
-		storageKey?: string;
-		children: import('svelte').Snippet;
+		/** Force a specific theme (for nested overrides) */
+		forceTheme?: ResolvedTheme
+		children: Snippet
 	}
 
-	let { forceTheme, storageKey, children }: Props = $props();
+	let { forceTheme, children }: Props = $props()
 
-	// Initialize the theme context
-	let theme = createThemeContext({
-		get forceTheme() {
-			return forceTheme;
-		},
-		get storageKey() {
-			return storageKey;
-		}
-	});
+	const theme = createThemeContext({ forceTheme })
 </script>
 
-<div class="theme-provider" data-theme={theme.mode}>
+<!-- For nested providers, set data-theme on the wrapper -->
+{#if forceTheme}
+	<div class="theme-scope" data-theme={theme.mode}>
+		{@render children()}
+	</div>
+{:else}
 	{@render children()}
-</div>
+{/if}
 
 <style>
-	.theme-provider {
-		/* Full viewport coverage for root usage */
-		min-height: 100%;
-		/* Apply theme colors */
+	.theme-scope {
 		background-color: var(--color-background);
 		color: var(--color-foreground);
-
-		/* Smooth transitions between themes */
-		transition:
-			background-color 0.3s ease,
-			color 0.3s ease;
+		transition: background-color 0.3s ease, color 0.3s ease;
 	}
 </style>
