@@ -1,24 +1,24 @@
 <!-- src/lib/components/accordion/AccordionItem.svelte -->
 <script lang="ts">
-	import { getAccordionContext } from './accordion-context.svelte'
-	import type { Snippet } from 'svelte'
+	import type { Snippet } from 'svelte';
+	import { getAccordionContext } from './accordion-context.svelte';
 
 	interface Props {
 		/** Unique identifier for this item */
-		id: string
+		id: string;
 
 		/** Additional CSS class */
-		class?: string
+		class?: string;
 
 		/** Item content (should contain AccordionTrigger and AccordionContent) */
-		children: Snippet
+		children: Snippet;
 	}
 
-	let { id, class: className = '', children }: Props = $props()
+	let { id, class: className = '', children }: Props = $props();
 
-	const accordion = getAccordionContext()
+	const accordion = getAccordionContext();
 
-	let isExpanded = $derived(accordion.isExpanded(id))
+	let isExpanded = $derived(accordion.isExpanded(id));
 </script>
 
 <div
@@ -31,7 +31,8 @@
 
 <style>
 	.accordion-item {
-		border-bottom: 1px solid var(--color-border, #e2e8f0);
+		border-bottom: 1px solid var(--color-border);
+		transition: border-color 0.2s ease;
 	}
 
 	.accordion-item:last-child {

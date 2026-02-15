@@ -1,22 +1,22 @@
 <!-- NavItem.svelte (4 levels deep from root layout) -->
 <script>
-	import { getContext } from 'svelte'
+	import { getContext } from 'svelte';
 
 	// Accept the item prop using Svelte 5 $props rune
-	let { item } = $props()
+	let { item } = $props();
 
 	// NavItem uses theme for styling - reaches all the way up through
 	// NavMenu and Sidebar (which don't know about theme) to get it
-	const theme = getContext('theme')
-	// $inspect("🚀 Item ~ theme:", theme)
+	const theme = getContext('theme');
+	// $inspect("Item ~ theme:", theme)
 </script>
 
 <!-- anchor use theme text color and spacing -->
 
 <a
 	href={item.href}
-	style:color={theme.colors.text} 
-	style:padding="{theme.spacing.sm} 
+	style:color={theme.colors.text}
+	style:padding="{theme.spacing.sm}
 	{theme.spacing.md}"
 >
 	{item.label}

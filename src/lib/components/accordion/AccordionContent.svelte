@@ -1,24 +1,24 @@
 <!-- src/lib/components/accordion/AccordionContent.svelte -->
 <script lang="ts">
-	import { getAccordionContext } from './accordion-context.svelte'
-	import type { Snippet } from 'svelte'
+	import type { Snippet } from 'svelte';
+	import { getAccordionContext } from './accordion-context.svelte';
 
 	interface Props {
 		/** ID of the accordion item this content belongs to */
-		itemId: string
+		itemId: string;
 
 		/** Additional CSS class */
-		class?: string
+		class?: string;
 
 		/** Content to show when expanded */
-		children: Snippet
+		children: Snippet;
 	}
 
-	let { itemId, class: className = '', children }: Props = $props()
+	let { itemId, class: className = '', children }: Props = $props();
 
-	const accordion = getAccordionContext()
+	const accordion = getAccordionContext();
 
-	let isExpanded = $derived(accordion.isExpanded(itemId))
+	let isExpanded = $derived(accordion.isExpanded(itemId));
 </script>
 
 <div
@@ -38,7 +38,7 @@
 	.accordion-content {
 		display: grid;
 		grid-template-rows: 0fr;
-		transition: grid-template-rows 0.2s ease;
+		transition: grid-template-rows 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 	}
 
 	.accordion-content.expanded {
@@ -50,6 +50,9 @@
 	}
 
 	.accordion-content.expanded .content-inner {
-		padding: 0 1.25rem 1rem;
+		padding: 0 1rem 1rem;
+		font-size: 0.875rem;
+		line-height: 1.6;
+		color: var(--color-muted-foreground);
 	}
 </style>

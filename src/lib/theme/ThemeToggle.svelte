@@ -1,65 +1,48 @@
 <!-- src/lib/theme/ThemeToggle.svelte -->
 <script lang="ts">
-	import { getThemeContext } from './theme-context.svelte.js'
+	import { Moon, Sun } from 'lucide-svelte';
+	import { getThemeContext } from './theme-context.svelte.js';
 
-	const theme = getThemeContext()
+	const theme = getThemeContext();
 
-	let label = $derived(theme.isDark ? 'Switch to light mode' : 'Switch to dark mode')
+	let label = $derived(theme.isDark ? 'Switch to light mode' : 'Switch to dark mode');
 </script>
 
-<button
-	type="button"
-	onclick={() => theme.toggle()}
-	class="theme-toggle"
-	aria-label={label}
->
+<button type="button" onclick={() => theme.toggle()} class="theme-toggle" aria-label={label}>
 	{#if theme.isDark}
-		<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-			<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-		</svg>
+		<Moon size={20} />
 	{:else}
-		<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-			<circle cx="12" cy="12" r="5" />
-			<line x1="12" y1="1" x2="12" y2="3" />
-			<line x1="12" y1="21" x2="12" y2="23" />
-			<line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-			<line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-			<line x1="1" y1="12" x2="3" y2="12" />
-			<line x1="21" y1="12" x2="23" y2="12" />
-			<line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-			<line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-		</svg>
+		<Sun size={20} />
 	{/if}
 </button>
 
 <style>
 	.theme-toggle {
-		display: flex;
+		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		width: 44px;
-		height: 44px;
+		width: 40px;
+		height: 40px;
 		padding: 0;
-		border: none;
-		border-radius: 50%;
-		background-color: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-md);
+		background-color: var(--color-background);
 		color: var(--color-foreground);
 		cursor: pointer;
-		transition: background-color 0.2s, transform 0.2s;
+		transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
 	}
 
 	.theme-toggle:hover {
-		background-color: var(--color-surface-hover);
-		transform: scale(1.05);
+		background-color: var(--color-muted);
+		border-color: var(--color-muted-foreground);
 	}
 
 	.theme-toggle:focus-visible {
-		outline: 2px solid var(--color-border-focus);
+		outline: 2px solid var(--color-ring);
 		outline-offset: 2px;
 	}
 
-	.theme-toggle svg {
-		width: 22px;
-		height: 22px;
+	.theme-toggle:active {
+		scale: 0.95;
 	}
 </style>

@@ -89,34 +89,36 @@
 
 <style>
 	.tab {
-		padding: 0.75rem 1rem;
-		font-size: 0.9375rem;
+		position: relative;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0.5rem 1rem;
+		font-size: 0.875rem;
 		font-weight: 500;
-		color: var(--color-foreground-muted, #64748b);
+		color: var(--color-muted-foreground);
 		background: transparent;
 		border: none;
-		border-bottom: 2px solid transparent;
-		margin-bottom: -1px;
 		cursor: pointer;
-		transition:
-			color 0.2s,
-			border-color 0.2s;
+		transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
 		white-space: nowrap;
+		border-radius: var(--radius-sm);
 	}
 
 	.tab:hover:not(:disabled) {
-		color: var(--color-foreground, #1e293b);
+		color: var(--color-foreground);
+		background: var(--color-muted);
 	}
 
 	.tab:focus-visible {
-		outline: 2px solid var(--color-primary, #3b82f6);
-		outline-offset: -2px;
-		border-radius: 4px 4px 0 0;
+		outline: 2px solid var(--color-ring);
+		outline-offset: 2px;
 	}
 
 	.tab.active {
-		color: var(--color-primary, #3b82f6);
-		border-bottom-color: var(--color-primary, #3b82f6);
+		color: var(--color-foreground);
+		background: var(--color-background);
+		box-shadow: var(--shadow-sm);
 	}
 
 	.tab:disabled {
@@ -126,18 +128,7 @@
 
 	/* Vertical orientation styles */
 	:global([data-orientation='vertical']) .tab {
-		border-bottom: none;
-		border-right: 2px solid transparent;
-		margin-bottom: 0;
-		margin-right: -1px;
-		text-align: left;
-	}
-
-	:global([data-orientation='vertical']) .tab.active {
-		border-right-color: var(--color-primary, #3b82f6);
-	}
-
-	:global([data-orientation='vertical']) .tab:focus-visible {
-		border-radius: 4px 0 0 4px;
+		width: 100%;
+		justify-content: flex-start;
 	}
 </style>

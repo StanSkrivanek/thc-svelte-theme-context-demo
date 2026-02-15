@@ -1,15 +1,17 @@
 <!-- src/lib/theme/ThemeSelector.svelte -->
 <script lang="ts">
-	import { getThemeContext } from './theme-context.svelte.js'
-	import type { ThemePreference } from './types.js'
+	import type { Icon } from 'lucide-svelte';
+	import { Monitor, Moon, Sun } from 'lucide-svelte';
+	import { getThemeContext } from './theme-context.svelte.js';
+	import type { ThemePreference } from './types.js';
 
-	const theme = getThemeContext()
+	const theme = getThemeContext();
 
-	const options: { value: ThemePreference; label: string; icon: string }[] = [
-		{ value: 'light', label: 'Light', icon: '☀️' },
-		{ value: 'dark', label: 'Dark', icon: '🌙' },
-		{ value: 'system', label: 'System', icon: '💻' }
-	]
+	const options: { value: ThemePreference; label: string; icon: typeof Icon }[] = [
+		{ value: 'light', label: 'Light', icon: Sun },
+		{ value: 'dark', label: 'Dark', icon: Moon },
+		{ value: 'system', label: 'System', icon: Monitor }
+	];
 </script>
 
 <div class="theme-selector" role="radiogroup" aria-label="Theme selection">
@@ -22,7 +24,7 @@
 			class:selected={theme.preference === option.value}
 			onclick={() => theme.setPreference(option.value)}
 		>
-			<span class="icon">{option.icon}</span>
+			<span class="icon"><option.icon size={16} /></span>
 			<span class="label">{option.label}</span>
 		</button>
 	{/each}
@@ -37,40 +39,47 @@
 <style>
 	.theme-selector {
 		display: inline-flex;
-		gap: 4px;
-		padding: 4px;
-		border-radius: 12px;
-		background: var(--color-surface);
+		gap: 0.25rem;
+		padding: 0.25rem;
+		border-radius: var(--radius-md);
+		background: var(--color-muted);
+		border: 1px solid var(--color-border);
 	}
 
 	.option {
 		display: flex;
 		align-items: center;
-		gap: 6px;
-		padding: 8px 12px;
+		gap: 0.5rem;
+		padding: 0.5rem 0.75rem;
 		border: none;
-		border-radius: 8px;
+		border-radius: var(--radius-sm);
 		background: transparent;
-		color: var(--color-foreground);
-		font-size: 14px;
+		color: var(--color-muted-foreground);
+		font-size: 0.875rem;
+		font-weight: 500;
 		cursor: pointer;
-		transition: background-color 0.2s;
+		transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
 	}
 
 	.option:hover:not(.selected) {
-		background: var(--color-surface-hover);
+		background: var(--color-muted);
+		color: var(--color-foreground);
+	}
+
+	.option:focus-visible {
+		outline: 2px solid var(--color-ring);
+		outline-offset: 2px;
 	}
 
 	.option.selected {
 		background: var(--color-background);
-		box-shadow: 0 1px 3px var(--color-shadow);
+		color: var(--color-foreground);
+		box-shadow: var(--shadow-sm);
 	}
 
-	.icon { font-size: 16px; }
-
-	.system-note {
-		margin-top: 8px;
-		font-size: 12px;
-		color: var(--color-foreground-muted);
+	.icon {
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 </style>
