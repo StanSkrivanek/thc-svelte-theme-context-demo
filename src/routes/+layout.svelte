@@ -2,7 +2,6 @@
 	import favicon from '$lib/assets/favicon.svg';
 	import Header from '$lib/components/Header.svelte';
 	import Sidebar from '$lib/components/Sidebar.svelte';
-	import { ToastProvider, ToastViewport } from '$lib/components/toast';
 	import ThemeProvider from '$lib/theme/ThemeProvider.svelte';
 	import type { Snippet } from 'svelte';
 	import { setContext } from 'svelte';
@@ -38,20 +37,15 @@
 	<link rel="icon" href={favicon} />
 </svelte:head>
 <ThemeProvider>
-	<ToastProvider position="top-center" defaultDuration={5000} maxToasts={5}>
-		<div class="app-layout">
-			<Header />
-			<div class="app-body">
-				<Sidebar />
-				<main class="main-content">
-					{@render children()}
-				</main>
-			</div>
+	<div class="app-layout">
+		<Header />
+		<div class="app-body">
+			<Sidebar />
+			<main class="main-content">
+				{@render children()}
+			</main>
 		</div>
-
-		<!-- Viewport renders all toasts -->
-		<ToastViewport />
-	</ToastProvider>
+	</div>
 </ThemeProvider>
 
 <style>
