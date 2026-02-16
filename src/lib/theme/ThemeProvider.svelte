@@ -1,18 +1,19 @@
 <!-- src/lib/theme/ThemeProvider.svelte -->
 <script lang="ts">
-	import { createThemeContext } from './theme-context.svelte.js'
-	import type { ResolvedTheme } from './types.js'
-	import type { Snippet } from 'svelte'
+	import type { Snippet } from 'svelte';
+	import { createThemeContext } from './theme-context.svelte.js';
+	import type { ResolvedTheme } from './types.js';
 
 	interface Props {
 		/** Force a specific theme (for nested overrides) */
-		forceTheme?: ResolvedTheme
-		children: Snippet
+		forceTheme?: ResolvedTheme;
+		children: Snippet;
 	}
 
-	let { forceTheme, children }: Props = $props()
+	let { forceTheme, children }: Props = $props();
 
-	const theme = createThemeContext({ forceTheme })
+	// Pass forceTheme as a getter for reactivity
+	const theme = createThemeContext({ forceTheme: () => forceTheme });
 </script>
 
 <!-- For nested providers, set data-theme on the wrapper -->
@@ -28,6 +29,8 @@
 	.theme-scope {
 		background-color: var(--color-background);
 		color: var(--color-foreground);
-		transition: background-color 0.3s ease, color 0.3s ease;
+		transition:
+			background-color 0.3s ease,
+			color 0.3s ease;
 	}
 </style>

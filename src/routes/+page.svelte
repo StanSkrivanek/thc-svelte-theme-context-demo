@@ -1,6 +1,11 @@
 <script lang="ts">
-	import Card from '$lib/components/Card.svelte';
-	import ThemedCard from '$lib/components/ThemedCard.svelte';
+	import {
+		Accordion,
+		AccordionContent,
+		AccordionItem,
+		AccordionTrigger
+	} from '$lib/components/accordion';
+	import { Tab, TabList, TabPanel, Tabs } from '$lib/components/tabs';
 	import ThemeProvider from '$lib/theme/ThemeProvider.svelte';
 	// TABS DEMO
 	// TOAST DEMO
@@ -42,6 +47,10 @@
 	}
 
 	// ACCORDION DEMO
+
+	function handleTabChange(tabId: string) {
+		console.log('Tab changed to:', tabId);
+	}
 </script>
 
 <!-- <div class="demo">
@@ -60,18 +69,18 @@
 	<p>This card follows the page theme.</p>
 </ThemedCard> -->
 <!-- <div class="grid"> -->
-	<!-- Works standalone -->
-	<!-- <Card title="Hello World">
+<!-- Works standalone -->
+<!-- <Card title="Hello World">
 		<p>This card uses default styling.</p>
 	</Card> -->
 
-	<!-- Adapts to theme context -->
-	<!-- <Card title="Themed Card" variant="primary">
+<!-- Adapts to theme context -->
+<!-- <Card title="Themed Card" variant="primary">
 		<p>This card uses your app's primary color.</p>
 	</Card> -->
 
-	<!-- Inside a dark-themed section -->
-	<!-- <Card title="Dark Mode" subtitle="Automatically adapts">
+<!-- Inside a dark-themed section -->
+<!-- <Card title="Dark Mode" subtitle="Automatically adapts">
 		<p>Border and shadow adjust for dark backgrounds.</p>
 	</Card> -->
 <!-- </div> -->
@@ -83,84 +92,85 @@
 	</ThemedCard>
 </ThemeProvider> -->
 <!-- This section forces dark theme -->
- <div class="page">
+<div class="page">
 	<ThemeProvider forceTheme="dark">
 		<section class="promo-card">
 			<h2>Featured Content</h2>
 			<p>This card is always dark, even on a light page.</p>
 		</section>
 	</ThemeProvider>
-		<!-- This follows the page theme -->
+	<!-- This follows the page theme -->
 	<section class="regular-card">
 		<h2>Regular Content</h2>
 		<p>This card follows the page theme.</p>
 	</section>
 </div>
+
 <!-- Single mode: only one item open at a time -->
 <!-- <Accordion single defaultExpanded={['item-1']}>
-		<AccordionItem id="item-1">
-			<AccordionTrigger itemId="item-1">What is your return policy?</AccordionTrigger>
-			<AccordionContent itemId="item-1">
-				<p>
-					We offer a 30-day return policy for all unused items in their original packaging. Simply
-					contact our support team to initiate a return.
-					</p>
-					</AccordionContent>
-					</AccordionItem>
-					
-					<AccordionItem id="item-2">
-						<AccordionTrigger itemId="item-2">How long does shipping take?</AccordionTrigger>
-						<AccordionContent itemId="item-2">
-							<p>
-								Standard shipping takes 5-7 business days. Express shipping is available for 2-3 business
-								day delivery.
-								</p>
-								</AccordionContent>
-								</AccordionItem>
-								
-								<AccordionItem id="item-3">
-									<AccordionTrigger itemId="item-3">Do you ship internationally?</AccordionTrigger>
-									<AccordionContent itemId="item-3">
-										<p>
-											Yes! We ship to over 50 countries. International shipping typically takes 10-14 business
-											days.
-											</p>
-											</AccordionContent>
-											</AccordionItem>
-											</Accordion> -->
+	<AccordionItem id="item-1">
+		<AccordionTrigger itemId="item-1">What is your return policy?</AccordionTrigger>
+		<AccordionContent itemId="item-1">
+			<p>
+				We offer a 30-day return policy for all unused items in their original packaging. Simply
+				contact our support team to initiate a return.
+			</p>
+		</AccordionContent>
+	</AccordionItem>
+
+	<AccordionItem id="item-2">
+		<AccordionTrigger itemId="item-2">How long does shipping take?</AccordionTrigger>
+		<AccordionContent itemId="item-2">
+			<p>
+				Standard shipping takes 5-7 business days. Express shipping is available for 2-3 business
+				day delivery.
+			</p>
+		</AccordionContent>
+	</AccordionItem>
+
+	<AccordionItem id="item-3">
+		<AccordionTrigger itemId="item-3">Do you ship internationally?</AccordionTrigger>
+		<AccordionContent itemId="item-3">
+			<p>
+				Yes! We ship to over 50 countries. International shipping typically takes 10-14 business
+				days.
+			</p>
+		</AccordionContent>
+	</AccordionItem>
+</Accordion> -->
 
 <!-- <Tabs defaultTab="overview" onTabChange={handleTabChange} orientation="horizontal">
-		<TabList>
-			<Tab id="overview">Overview</Tab>
-			<Tab id="features">Features</Tab>
-			<Tab id="pricing">Pricing</Tab>
-			<Tab id="faq" disabled>FAQ (Coming Soon)</Tab>
-		</TabList>
+	<TabList>
+		<Tab id="overview">Overview</Tab>
+		<Tab id="features">Features</Tab>
+		<Tab id="pricing">Pricing</Tab>
+		<Tab id="faq" disabled>FAQ (Coming Soon)</Tab>
+	</TabList>
 
-		<TabPanel id="overview">
-			<h3>Product Overview</h3>
-			<p>Welcome to our amazing product. Here's what you need to know...</p>
-		</TabPanel>
+	<TabPanel id="overview">
+		<h3>Product Overview</h3>
+		<p>Welcome to our amazing product. Here's what you need to know...</p>
+	</TabPanel>
 
-		<TabPanel id="features">
-			<h3>Key Features</h3>
-			<ul>
-				<li>Feature one with detailed explanation</li>
-				<li>Feature two that makes life easier</li>
-				<li>Feature three for power users</li>
-			</ul>
-		</TabPanel>
+	<TabPanel id="features">
+		<h3>Key Features</h3>
+		<ul>
+			<li>Feature one with detailed explanation</li>
+			<li>Feature two that makes life easier</li>
+			<li>Feature three for power users</li>
+		</ul>
+	</TabPanel>
 
-		<TabPanel id="pricing">
-			<h3>Pricing Plans</h3>
-			<p>Choose the plan that fits your needs.</p>
-		</TabPanel>
+	<TabPanel id="pricing">
+		<h3>Pricing Plans</h3>
+		<p>Choose the plan that fits your needs.</p>
+	</TabPanel>
 
-		<TabPanel id="faq">
-			<h3>Frequently Asked Questions</h3>
-			<p>Coming soon!</p>
-		</TabPanel>
-	</Tabs> -->
+	<TabPanel id="faq">
+		<h3>Frequently Asked Questions</h3>
+		<p>Coming soon!</p>
+	</TabPanel>
+</Tabs> -->
 
 <style>
 	.grid {
@@ -194,7 +204,8 @@
 		background: #2563eb;
 	}
 
-	.promo-card, .regular-card {
+	.promo-card,
+	.regular-card {
 		background-color: var(--color-surface);
 		color: var(--color-foreground);
 		border: 1px solid var(--color-border);

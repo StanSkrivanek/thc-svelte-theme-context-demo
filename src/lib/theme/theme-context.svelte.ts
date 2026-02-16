@@ -1,8 +1,8 @@
 // src/lib/theme/theme-context.svelte.ts
 
-import { setContext, getContext, hasContext } from 'svelte';
 import { browser } from '$app/environment';
-import type { ThemePreference, ResolvedTheme, ThemeContext } from './types.js';
+import { getContext, hasContext, setContext } from 'svelte';
+import type { ResolvedTheme, ThemeContext, ThemePreference } from './types.js';
 
 const THEME_KEY = Symbol('theme');
 const STORAGE_KEY = 'theme-preference';
@@ -23,8 +23,8 @@ function loadSavedPreference(): ThemePreference | null {
 }
 
 interface CreateThemeOptions {
-	/** Force a specific theme (for nested overrides) */
-	forceTheme?: ResolvedTheme;
+	/** Force a specific theme (for nested overrides) - can be a value or getter for reactivity */
+	forceTheme?: ResolvedTheme | (() => ResolvedTheme | undefined);
 }
 
 /**
@@ -32,7 +32,10 @@ interface CreateThemeOptions {
  * or nested for local theme overrides.
  */
 export function createThemeContext(options: CreateThemeOptions = {}): ThemeContext {
-	const { forceTheme } = options;
+	const forceThemeOption = options.forceTheme;
+	// Support both direct values and getter functions for reactivity
+	const getForceTheme =
+		typeof forceThemeOption === 'function' ? forceThemeOption : () => forceThemeOption;
 
 	// State
 	let systemMode = $state<ResolvedTheme>(getSystemPreference());
@@ -40,7 +43,8 @@ export function createThemeContext(options: CreateThemeOptions = {}): ThemeConte
 
 	// Derived values
 	const mode = $derived.by<ResolvedTheme>(() => {
-		if (forceTheme) return forceTheme;
+		const forced = getForceTheme();
+		if (forced) return forced;
 		if (preference === 'system') return systemMode;
 		return preference;
 	});
@@ -67,7 +71,7 @@ export function createThemeContext(options: CreateThemeOptions = {}): ThemeConte
 
 	// Effect: Apply theme (skip for nested providers)
 	$effect(() => {
-		if (!browser || forceTheme) return;
+		if (!browser || getForceTheme()) return;
 
 		// This is ALL JavaScript needs to do!
 		document.documentElement.dataset.theme = mode;
@@ -76,7 +80,7 @@ export function createThemeContext(options: CreateThemeOptions = {}): ThemeConte
 
 	// Effect: Persist preference (skip for nested providers)
 	$effect(() => {
-		if (!browser || forceTheme) return;
+		if (!browser || getForceTheme()) return;
 
 		localStorage.setItem(STORAGE_KEY, preference);
 		document.cookie = `${STORAGE_KEY}=${preference};path=/;max-age=${COOKIE_MAX_AGE};SameSite=Lax`;
@@ -84,7 +88,7 @@ export function createThemeContext(options: CreateThemeOptions = {}): ThemeConte
 
 	// Effect: Update meta theme-color for mobile browsers
 	$effect(() => {
-		if (!browser || forceTheme) return;
+		if (!browser || getForceTheme()) return;
 
 		let meta = document.querySelector('meta[name="theme-color"]');
 		if (!meta) {
