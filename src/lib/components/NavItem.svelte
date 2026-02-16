@@ -27,7 +27,7 @@
 		display: block;
 		text-decoration: none;
 		border-radius: 4px;
-		transition: background 0.2s;
+		transition: background 0.15s;
 	}
 
 	a:hover {

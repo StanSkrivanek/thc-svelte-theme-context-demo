@@ -34,7 +34,7 @@
 		border-radius: var(--radius-lg);
 		box-shadow: var(--shadow-sm);
 		overflow: hidden;
-		transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+		transition: box-shadow 0.15s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.15s cubic-bezier(0.4, 0, 0.2, 1);
 	}
 
 	.card-header {

@@ -30,7 +30,7 @@
 		background-color: var(--color-background);
 		color: var(--color-foreground);
 		transition:
-			background-color 0.3s ease,
-			color 0.3s ease;
+			background-color 0.15s ease,
+			color 0.15s ease;
 	}
 </style>

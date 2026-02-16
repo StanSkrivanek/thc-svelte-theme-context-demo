@@ -231,8 +231,8 @@ body {
 	line-height: 1.6;
 	accent-color: var(--color-primary);
 	transition:
-		background-color 0.2s ease,
-		color 0.2s ease;
+		background-color 0.15s ease,
+		color 0.15s ease;
 }
 
 /* Focus ring utility */

@@ -23,7 +23,7 @@ function loadSavedPreference(): ThemePreference | null {
 }
 
 interface CreateThemeOptions {
-	/** Force a specific theme (for nested overrides) - can be a value or getter for reactivity */
+	/** Force a specific theme (for nested overrides) */
 	forceTheme?: ResolvedTheme | (() => ResolvedTheme | undefined);
 }
 
@@ -32,26 +32,28 @@ interface CreateThemeOptions {
  * or nested for local theme overrides.
  */
 export function createThemeContext(options: CreateThemeOptions = {}): ThemeContext {
-	const forceThemeOption = options.forceTheme;
+	const { forceTheme: forceThemeOption } = options;
+	
 	// Support both direct values and getter functions for reactivity
-	const getForceTheme =
-		typeof forceThemeOption === 'function' ? forceThemeOption : () => forceThemeOption;
+	const getForceTheme = typeof forceThemeOption === 'function' 
+		? forceThemeOption 
+		: () => forceThemeOption;
 
 	// State
 	let systemMode = $state<ResolvedTheme>(getSystemPreference());
 	let preference = $state<ThemePreference>(loadSavedPreference() ?? 'system');
 
 	// Derived values
-	const mode = $derived.by<ResolvedTheme>(() => {
+	let mode = $derived.by<ResolvedTheme>(() => {
 		const forced = getForceTheme();
 		if (forced) return forced;
 		if (preference === 'system') return systemMode;
 		return preference;
 	});
 
-	const isDark = $derived(mode === 'dark');
-	const isLight = $derived(mode === 'light');
-	const isSystem = $derived(preference === 'system');
+	let isDark = $derived(mode === 'dark');
+	let isLight = $derived(mode === 'light');
+	let isSystem = $derived(preference === 'system');
 
 	// Effect: Listen for system preference changes
 	$effect(() => {

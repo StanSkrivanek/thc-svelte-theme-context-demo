@@ -29,7 +29,9 @@
 		background-color: var(--color-background);
 		color: var(--color-foreground);
 		cursor: pointer;
-		transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+		transition: background-color 0.15s cubic-bezier(0.4, 0, 0.2, 1), 
+		            border-color 0.15s cubic-bezier(0.4, 0, 0.2, 1),
+		            scale 0.15s cubic-bezier(0.4, 0, 0.2, 1);
 	}
 
 	.theme-toggle:hover {
