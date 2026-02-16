@@ -14,7 +14,7 @@
 		<div class="container">
 			<div class="hero-content">
 				<div class="hero-badge">
-					<Zap size={16} />
+					<Zap size={16} color="orangered" />
 					<span>Production-Ready Theme System</span>
 				</div>
 				<h1 class="hero-title">
@@ -34,7 +34,7 @@
 						<span class="status-label">Current: <strong>{theme.mode}</strong></span>
 					</div>
 					<div class="status-item">
-						<Code size={16} />
+						<Code size={16} color="orangered" />
 						<span class="status-label">Preference: <strong>{theme.preference}</strong></span>
 					</div>
 				</div>
@@ -46,37 +46,37 @@
 	<div class="container">
 		<div class="section">
 			<h2 class="section-title">
-				<Palette size={24} />
+				<Palette size={24} color="orangered" />
 				Key Features
 			</h2>
 			<div class="feature-grid">
 				<div class="feature-card">
-					<CircleCheck size={20} class="feature-icon" />
+					<CircleCheck size={20} color="lightgreen" class="feature-icon" />
 					<h3>CSS-First Architecture</h3>
 					<p>All colors defined in CSS. JavaScript just sets <code>data-theme</code> attribute.</p>
 				</div>
 				<div class="feature-card">
-					<CircleCheck size={20} class="feature-icon" />
+					<CircleCheck size={20} color="lightgreen" class="feature-icon" />
 					<h3>No Flash on Load</h3>
 					<p>Inline script sets theme before first paint. Perfect SSR support.</p>
 				</div>
 				<div class="feature-card">
-					<CircleCheck size={20} class="feature-icon" />
+					<CircleCheck size={20} color="lightgreen" class="feature-icon" />
 					<h3>System Preference Detection</h3>
 					<p>Automatically detects and responds to OS theme changes in real-time.</p>
 				</div>
 				<div class="feature-card">
-					<CircleCheck size={20} class="feature-icon" />
+					<CircleCheck size={20} color="lightgreen" class="feature-icon" />
 					<h3>localStorage Persistence</h3>
 					<p>User preferences are saved and restored across sessions.</p>
 				</div>
 				<div class="feature-card">
-					<CircleCheck size={20} class="feature-icon" />
+					<CircleCheck size={20} color="lightgreen" class="feature-icon" />
 					<h3>Nested Theme Overrides</h3>
 					<p>Different parts of your app can use different themes simultaneously.</p>
 				</div>
 				<div class="feature-card">
-					<CircleCheck size={20} class="feature-icon" />
+					<CircleCheck size={20} color="lightgreen" class="feature-icon" />
 					<h3>Type-Safe API</h3>
 					<p>Full TypeScript support with type inference throughout.</p>
 				</div>
@@ -86,7 +86,7 @@
 		<!-- Demo Cards Section -->
 		<div class="section">
 			<h2 class="section-title">
-				<Sun size={24} />
+				<Sun size={24} color="orangered" />
 				Theme Variations
 			</h2>
 			<div class="demo-grid">
@@ -111,7 +111,7 @@
 						<div class="demo-card-header">
 							<h3>Always Light</h3>
 							<span class="badge badge-light">
-								<Sun size={14} />
+								<Sun size={14} color="orangered" />
 								Forced Light
 							</span>
 						</div>
@@ -131,7 +131,7 @@
 						<div class="demo-card-header">
 							<h3>Always Dark</h3>
 							<span class="badge badge-dark">
-								<Moon size={14} />
+								<Moon size={14} color="orangered" />
 								Forced Dark
 							</span>
 						</div>
@@ -150,7 +150,7 @@
 		<!-- Color Palette Section -->
 		<div class="section">
 			<h2 class="section-title">
-				<Palette size={24} />
+				<Palette size={24} color="orangered" />
 				Color Palette
 			</h2>
 			<div class="color-grid">
@@ -202,7 +202,7 @@
 		<!-- Code Example Section -->
 		<div class="section">
 			<h2 class="section-title">
-				<Code size={24} />
+				<Code size={24} color="orangered" />
 				Usage Example
 			</h2>
 			<div class="code-example">
@@ -254,7 +254,7 @@
 	}
 
 	.hero {
-		background: linear-gradient(to bottom, var(--color-muted), var(--color-background));
+		background: var(--color-muted);
 		border-bottom: 1px solid var(--color-border);
 		padding: 4rem 2rem;
 		margin-bottom: 4rem;
@@ -290,11 +290,7 @@
 		font-weight: 800;
 		line-height: 1.1;
 		margin: 0 0 1rem;
-		color: var(--color-foreground);
-		background: linear-gradient(to right, var(--color-foreground), var(--color-muted-foreground));
-		background-clip: text;
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
+		color: orangered;
 	}
 
 	.hero-description {
