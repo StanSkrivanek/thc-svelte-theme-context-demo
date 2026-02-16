@@ -1,5 +1,5 @@
 <script lang="ts">
-	import ThemeSelector from "$lib/theme/ThemeSelector.svelte";
+	import ThemeSelector from '$lib/theme/ThemeSelector.svelte';
 	let activeLink = 'home';
 
 	const links = [

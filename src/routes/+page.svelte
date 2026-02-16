@@ -21,8 +21,8 @@
 					Context-Based Theme Switching<br />for SvelteKit
 				</h1>
 				<p class="hero-description">
-					A complete theme management system using Svelte 5's Context API. Supports light, dark,
-					and system modes with nested theme overrides, SSR, and zero flash of wrong theme.
+					A complete theme management system using Svelte 5's Context API. Supports light, dark, and
+					system modes with nested theme overrides, SSR, and zero flash of wrong theme.
 				</p>
 				<div class="hero-controls">
 					<ThemeSelector />
@@ -116,9 +116,8 @@
 							</span>
 						</div>
 						<p>
-							This card is wrapped in a <code>ThemeProvider</code> with <code
-								>forceTheme="light"</code
-							>. It stays light regardless of the page theme.
+							This card is wrapped in a <code>ThemeProvider</code> with
+							<code>forceTheme="light"</code>. It stays light regardless of the page theme.
 						</p>
 						<div class="demo-card-footer">
 							<code>&lt;ThemeProvider forceTheme="light"&gt;</code>
@@ -137,9 +136,8 @@
 							</span>
 						</div>
 						<p>
-							This card is wrapped in a <code>ThemeProvider</code> with <code
-								>forceTheme="dark"</code
-							>. It stays dark regardless of the page theme.
+							This card is wrapped in a <code>ThemeProvider</code> with
+							<code>forceTheme="dark"</code>. It stays dark regardless of the page theme.
 						</p>
 						<div class="demo-card-footer">
 							<code>&lt;ThemeProvider forceTheme="dark"&gt;</code>
@@ -208,40 +206,42 @@
 				Usage Example
 			</h2>
 			<div class="code-example">
-				<pre><code>{`<!-- Root Layout -->
-<script>
+				<pre><code
+						>&lt;!-- Root Layout --&gt;
+&lt;script&gt;
   import ThemeProvider from '$lib/theme/ThemeProvider.svelte'
   import '../app.css'
-</script>
+&lt;/script&gt;
 
-<ThemeProvider>
-  {@render children()}
-</ThemeProvider>
+&lt;ThemeProvider&gt;
+  &#123;@render children()&#125;
+&lt;/ThemeProvider&gt;
 
-<!-- Any Component -->
-<script>
-  import { getThemeContext } from '$lib/theme/theme-context.svelte.js'
+&lt;!-- Any Component --&gt;
+&lt;script&gt;
+  import &#123; getThemeContext &#125; from '$lib/theme/theme-context.svelte.js'
   const theme = getThemeContext()
-</script>
+&lt;/script&gt;
 
-<!-- Use CSS variables (recommended) -->
-<div class="card">
-  <h2>My Card</h2>
-</div>
+&lt;!-- Use CSS variables (recommended) --&gt;
+&lt;div class="card"&gt;
+  &lt;h2&gt;My Card&lt;/h2&gt;
+&lt;/div&gt;
 
-<style>
-  .card {
+&lt;style&gt;
+  .card &#123;
     background: var(--color-card);
     color: var(--color-card-foreground);
     border: 1px solid var(--color-border);
-  }
-</style>
+  &#125;
+&lt;/style&gt;
 
-<!-- Or access theme programmatically -->
-<p>Current theme: {theme.mode}</p>
-<button onclick={() => theme.toggle()}>
+&lt;!-- Or access theme programmatically --&gt;
+&lt;p&gt;Current theme: &#123;theme.mode&#125;&lt;/p&gt;
+&lt;button onclick=&#123;() =&gt; theme.toggle()&#125;&gt;
   Toggle Theme
-</button>`}</code></pre>
+&lt;/button&gt;</code
+					></pre>
 			</div>
 		</div>
 	</div>
@@ -254,11 +254,7 @@
 	}
 
 	.hero {
-		background: linear-gradient(
-			to bottom,
-			var(--color-muted),
-			var(--color-background)
-		);
+		background: linear-gradient(to bottom, var(--color-muted), var(--color-background));
 		border-bottom: 1px solid var(--color-border);
 		padding: 4rem 2rem;
 		margin-bottom: 4rem;
@@ -295,11 +291,7 @@
 		line-height: 1.1;
 		margin: 0 0 1rem;
 		color: var(--color-foreground);
-		background: linear-gradient(
-			to right,
-			var(--color-foreground),
-			var(--color-muted-foreground)
-		);
+		background: linear-gradient(to right, var(--color-foreground), var(--color-muted-foreground));
 		background-clip: text;
 		-webkit-background-clip: text;
 		-webkit-text-fill-color: transparent;
@@ -356,8 +348,13 @@
 	}
 
 	@keyframes pulse {
-		0%, 100% { opacity: 1; }
-		50% { opacity: 0.5; }
+		0%,
+		100% {
+			opacity: 1;
+		}
+		50% {
+			opacity: 0.5;
+		}
 	}
 
 	.status-label strong {
@@ -390,7 +387,9 @@
 		border-radius: var(--radius-lg);
 		background: var(--color-card);
 		border: 1px solid var(--color-border);
-		transition: border-color 0.15s, box-shadow 0.15s;
+		transition:
+			border-color 0.15s,
+			box-shadow 0.15s;
 	}
 
 	.feature-card:hover {

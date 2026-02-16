@@ -33,11 +33,10 @@ interface CreateThemeOptions {
  */
 export function createThemeContext(options: CreateThemeOptions = {}): ThemeContext {
 	const { forceTheme: forceThemeOption } = options;
-	
+
 	// Support both direct values and getter functions for reactivity
-	const getForceTheme = typeof forceThemeOption === 'function' 
-		? forceThemeOption 
-		: () => forceThemeOption;
+	const getForceTheme =
+		typeof forceThemeOption === 'function' ? forceThemeOption : () => forceThemeOption;
 
 	// State
 	let systemMode = $state<ResolvedTheme>(getSystemPreference());

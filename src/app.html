@@ -5,7 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!-- CRITICAL: Runs before page renders -->
 		<script>
-			(function() {
+			(function () {
 				try {
 					const stored = localStorage.getItem('theme-preference');
 					const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -22,7 +22,7 @@
 				} catch (e) {
 					// localStorage might be blocked
 				}
-			})()
+			})();
 		</script>
 		%sveltekit.head%
 	</head>
