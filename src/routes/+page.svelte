@@ -1,9 +1,9 @@
 <script lang="ts">
 	import ThemeProvider from '$lib/theme/ThemeProvider.svelte';
-	import ThemeToggle from '$lib/theme/ThemeToggle.svelte';
 	import ThemeSelector from '$lib/theme/ThemeSelector.svelte';
+	import ThemeToggle from '$lib/theme/ThemeToggle.svelte';
 	import { getThemeContext } from '$lib/theme/theme-context.svelte.js';
-	import { CheckCircle2, Code, Moon, Palette, Sun, Zap } from 'lucide-svelte';
+	import { CircleCheck, Code, Moon, Palette, Sun, Zap } from 'lucide-svelte';
 
 	const theme = getThemeContext();
 </script>
@@ -51,32 +51,32 @@
 			</h2>
 			<div class="feature-grid">
 				<div class="feature-card">
-					<CheckCircle2 size={20} class="feature-icon" />
+					<CircleCheck size={20} class="feature-icon" />
 					<h3>CSS-First Architecture</h3>
 					<p>All colors defined in CSS. JavaScript just sets <code>data-theme</code> attribute.</p>
 				</div>
 				<div class="feature-card">
-					<CheckCircle2 size={20} class="feature-icon" />
+					<CircleCheck size={20} class="feature-icon" />
 					<h3>No Flash on Load</h3>
 					<p>Inline script sets theme before first paint. Perfect SSR support.</p>
 				</div>
 				<div class="feature-card">
-					<CheckCircle2 size={20} class="feature-icon" />
+					<CircleCheck size={20} class="feature-icon" />
 					<h3>System Preference Detection</h3>
 					<p>Automatically detects and responds to OS theme changes in real-time.</p>
 				</div>
 				<div class="feature-card">
-					<CheckCircle2 size={20} class="feature-icon" />
+					<CircleCheck size={20} class="feature-icon" />
 					<h3>localStorage Persistence</h3>
 					<p>User preferences are saved and restored across sessions.</p>
 				</div>
 				<div class="feature-card">
-					<CheckCircle2 size={20} class="feature-icon" />
+					<CircleCheck size={20} class="feature-icon" />
 					<h3>Nested Theme Overrides</h3>
 					<p>Different parts of your app can use different themes simultaneously.</p>
 				</div>
 				<div class="feature-card">
-					<CheckCircle2 size={20} class="feature-icon" />
+					<CircleCheck size={20} class="feature-icon" />
 					<h3>Type-Safe API</h3>
 					<p>Full TypeScript support with type inference throughout.</p>
 				</div>

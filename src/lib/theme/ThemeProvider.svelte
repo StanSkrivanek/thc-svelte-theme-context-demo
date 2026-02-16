@@ -29,6 +29,8 @@
 	.theme-scope {
 		background-color: var(--color-background);
 		color: var(--color-foreground);
+		border-radius: var(--radius-lg);
+		overflow: hidden;
 		transition:
 			background-color 0.15s ease,
 			color 0.15s ease;
