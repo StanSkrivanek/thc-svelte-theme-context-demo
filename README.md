@@ -1,6 +1,6 @@
 # Theme System with Context
 
-> **Companion demo for:** [Theme System with Context](https://hackpile.chronicles) on *The Hackpile Chronicles*
+> **Companion demo for:** [Theme System with Context](https://hackpile.chronicles) on _The Hackpile Chronicles_
 
 A production-ready theme system built with Svelte 5 runes and SvelteKit, demonstrating modern context patterns, SSR-safe state management, and nested theme overrides.
 
@@ -48,26 +48,35 @@ The heart of the system—manages theme state using Svelte 5 runes:
 
 ```typescript
 export function createThemeContext(options?: CreateThemeOptions): ThemeContext {
-  let systemMode = $state<ResolvedTheme>(getSystemPreference());
-  let preference = $state<ThemePreference>('system');
-  
-  let mode = $derived.by<ResolvedTheme>(() => {
-    const forced = getForceTheme();
-    if (forced) return forced;
-    return preference === 'system' ? systemMode : preference;
-  });
-  
-  return {
-    get mode() { return mode; },
-    get preference() { return preference; },
-    setPreference(theme) { /* ... */ },
-    toggle() { /* ... */ },
-    // ...
-  };
+	let systemMode = $state<ResolvedTheme>(getSystemPreference());
+	let preference = $state<ThemePreference>('system');
+
+	let mode = $derived.by<ResolvedTheme>(() => {
+		const forced = getForceTheme();
+		if (forced) return forced;
+		return preference === 'system' ? systemMode : preference;
+	});
+
+	return {
+		get mode() {
+			return mode;
+		},
+		get preference() {
+			return preference;
+		},
+		setPreference(theme) {
+			/* ... */
+		},
+		toggle() {
+			/* ... */
+		}
+		// ...
+	};
 }
 ```
 
 **Key features:**
+
 - Uses `$state` for reactive preference tracking
 - Uses `$derived` for computed theme resolution
 - Handles system preference changes with `matchMedia` listener
@@ -79,13 +88,11 @@ Prevents hydration mismatches with inline script:
 
 ```svelte
 <script>
-  // Runs before hydration
-  const preference = localStorage.getItem('theme-preference') || 'system';
-  const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const theme = preference === 'system' 
-    ? (systemDark ? 'dark' : 'light') 
-    : preference;
-  document.documentElement.setAttribute('data-theme', theme);
+	// Runs before hydration
+	const preference = localStorage.getItem('theme-preference') || 'system';
+	const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+	const theme = preference === 'system' ? (systemDark ? 'dark' : 'light') : preference;
+	document.documentElement.setAttribute('data-theme', theme);
 </script>
 ```
 
@@ -95,8 +102,8 @@ Force specific themes in component subtrees:
 
 ```svelte
 <ThemeProvider forceTheme="dark">
-  <!-- Always renders in dark mode -->
-  <Card>Dark card content</Card>
+	<!-- Always renders in dark mode -->
+	<Card>Dark card content</Card>
 </ThemeProvider>
 ```
 
@@ -107,11 +114,11 @@ Force specific themes in component subtrees:
 ```svelte
 <!-- +layout.svelte -->
 <script>
-  import ThemeProvider from '$lib/theme/ThemeProvider.svelte';
+	import ThemeProvider from '$lib/theme/ThemeProvider.svelte';
 </script>
 
 <ThemeProvider>
-  <slot />
+	<slot />
 </ThemeProvider>
 ```
 
@@ -119,13 +126,13 @@ Force specific themes in component subtrees:
 
 ```svelte
 <script>
-  import { getThemeContext } from '$lib/theme/theme-context.svelte';
-  
-  const theme = getThemeContext();
+	import { getThemeContext } from '$lib/theme/theme-context.svelte';
+
+	const theme = getThemeContext();
 </script>
 
 <button onclick={() => theme.toggle()}>
-  Current: {theme.mode} (preference: {theme.preference})
+	Current: {theme.mode} (preference: {theme.preference})
 </button>
 ```
 
@@ -133,8 +140,8 @@ Force specific themes in component subtrees:
 
 ```svelte
 <script>
-  import ThemeToggle from '$lib/theme/ThemeToggle.svelte';
-  import ThemeSelector from '$lib/theme/ThemeSelector.svelte';
+	import ThemeToggle from '$lib/theme/ThemeToggle.svelte';
+	import ThemeSelector from '$lib/theme/ThemeSelector.svelte';
 </script>
 
 <!-- Quick toggle button -->
@@ -151,9 +158,11 @@ Force specific themes in component subtrees:
 Creates a theme context instance.
 
 **Options:**
+
 - `forceTheme?: ResolvedTheme | (() => ResolvedTheme)` - Force a specific theme
 
 **Returns:** `ThemeContext` with:
+
 - `mode: ResolvedTheme` - Current resolved theme ('light' or 'dark')
 - `preference: ThemePreference` - User preference ('light', 'dark', or 'system')
 - `isDark: boolean` - Whether current mode is dark
@@ -168,6 +177,7 @@ Creates a theme context instance.
 Root component that initializes theme context.
 
 **Props:**
+
 - `forceTheme?: ResolvedTheme` - Force a specific theme for nested override
 
 ### Types
@@ -183,13 +193,13 @@ Themes are applied via CSS custom properties on `[data-theme]`:
 
 ```css
 :root[data-theme='light'] {
-  --color-background: #ffffff;
-  --color-text: #1a1a1a;
+	--color-background: #ffffff;
+	--color-text: #1a1a1a;
 }
 
 :root[data-theme='dark'] {
-  --color-background: #1a1a1a;
-  --color-text: #ffffff;
+	--color-background: #1a1a1a;
+	--color-text: #ffffff;
 }
 ```
 
@@ -205,9 +215,10 @@ Components automatically inherit theme via CSS variables.
 
 ## Learn More
 
-Read the full article: **[Theme System with Context](https://hackpile.chronicles)** on *The Hackpile Chronicles*
+Read the full article: **[Theme System with Context](https://hackpilechronicles)** on _The Hackpile Chronicles_
 
 Topics covered:
+
 - Why context beats prop drilling for themes
 - Svelte 5 runes vs. stores for state management
 - SSR challenges and solutions
