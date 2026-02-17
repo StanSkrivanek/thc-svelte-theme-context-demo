@@ -1,278 +1,223 @@
-# sv
+# Theme System with Context
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+> **Companion demo for:** [Theme System with Context](https://hackpile.chronicles) on *The Hackpile Chronicles*
 
-## Creating a project
+A production-ready theme system built with Svelte 5 runes and SvelteKit, demonstrating modern context patterns, SSR-safe state management, and nested theme overrides.
 
-If you're seeing this, you've probably already done this step. Congrats!
+## Features
 
-```sh
-# create a new project
-npx sv create my-app
-```
+- **Three theme modes:** light, dark, and system (auto-detect)
+- **Persistent preferences:** localStorage with cookie fallback for SSR
+- **Nested theme overrides:** Force specific themes in component subtrees
+- **Reactive & performant:** Built with Svelte 5 runes (`$state`, `$derived`)
+- **SSR-safe:** No hydration mismatches or flashing
+- **Accessible:** Proper ARIA labels and keyboard navigation
+- **Type-safe:** Full TypeScript coverage
 
-To recreate this project with the same configuration:
-
-```sh
-# recreate this project
-pnpm dlx sv create --template minimal --types ts --add prettier eslint sveltekit-adapter="adapter:auto" devtools-json mcp="ide:vscode+setup:local" --install pnpm tests
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+## Quick Start
 
 ```sh
-npm run dev
+# Install dependencies
+pnpm install
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+# Start development server
+pnpm dev
+
+# Build for production
+pnpm build
 ```
 
-## Building
+## Architecture
 
-To create a production version of your app:
+### Core Files
 
-```sh
-npm run build
+```
+src/lib/theme/
+├── types.ts                    # Theme types
+├── theme-context.svelte.ts     # Context logic with runes
+├── ThemeProvider.svelte        # Root provider component
+├── ThemeSelector.svelte        # Theme picker UI
+└── ThemeToggle.svelte          # Quick toggle button
 ```
 
-You can preview the production build with `npm run preview`.
+### Key Concepts
+
+#### 1. Theme Context (`theme-context.svelte.ts`)
+
+The heart of the system—manages theme state using Svelte 5 runes:
+
+```typescript
+export function createThemeContext(options?: CreateThemeOptions): ThemeContext {
+  let systemMode = $state<ResolvedTheme>(getSystemPreference());
+  let preference = $state<ThemePreference>('system');
+  
+  let mode = $derived.by<ResolvedTheme>(() => {
+    const forced = getForceTheme();
+    if (forced) return forced;
+    return preference === 'system' ? systemMode : preference;
+  });
+  
+  return {
+    get mode() { return mode; },
+    get preference() { return preference; },
+    setPreference(theme) { /* ... */ },
+    toggle() { /* ... */ },
+    // ...
+  };
+}
+```
+
+**Key features:**
+- Uses `$state` for reactive preference tracking
+- Uses `$derived` for computed theme resolution
+- Handles system preference changes with `matchMedia` listener
+- Persists to localStorage and sets secure cookie
+
+#### 2. SSR-Safe Initialization
+
+Prevents hydration mismatches with inline script:
+
+```svelte
+<script>
+  // Runs before hydration
+  const preference = localStorage.getItem('theme-preference') || 'system';
+  const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const theme = preference === 'system' 
+    ? (systemDark ? 'dark' : 'light') 
+    : preference;
+  document.documentElement.setAttribute('data-theme', theme);
+</script>
+```
+
+#### 3. Nested Theme Overrides
+
+Force specific themes in component subtrees:
+
+```svelte
+<ThemeProvider forceTheme="dark">
+  <!-- Always renders in dark mode -->
+  <Card>Dark card content</Card>
+</ThemeProvider>
+```
+
+## Usage Examples
+
+### Basic Setup
+
+```svelte
+<!-- +layout.svelte -->
+<script>
+  import ThemeProvider from '$lib/theme/ThemeProvider.svelte';
+</script>
+
+<ThemeProvider>
+  <slot />
+</ThemeProvider>
+```
+
+### Accessing Theme Context
+
+```svelte
+<script>
+  import { getThemeContext } from '$lib/theme/theme-context.svelte';
+  
+  const theme = getThemeContext();
+</script>
+
+<button onclick={() => theme.toggle()}>
+  Current: {theme.mode} (preference: {theme.preference})
+</button>
+```
+
+### Using Theme Components
+
+```svelte
+<script>
+  import ThemeToggle from '$lib/theme/ThemeToggle.svelte';
+  import ThemeSelector from '$lib/theme/ThemeSelector.svelte';
+</script>
+
+<!-- Quick toggle button -->
+<ThemeToggle />
+
+<!-- Full theme selector with icons -->
+<ThemeSelector />
+```
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+## API Reference
 
-You’re right to be unsure. The list is not bad, but it mixes learning levels, concepts, and use-cases in a way that will confuse beginners and bore advanced readers. It also leaks React mental models in a few places.
+### `createThemeContext(options?)`
 
-Below is a clear, opinionated restructuring, followed by why your current version feels off, and then a polished replacement outline you can adopt directly.
+Creates a theme context instance.
 
-⸻
+**Options:**
+- `forceTheme?: ResolvedTheme | (() => ResolvedTheme)` - Force a specific theme
 
-What’s wrong with the current structure (honest critique)
+**Returns:** `ThemeContext` with:
+- `mode: ResolvedTheme` - Current resolved theme ('light' or 'dark')
+- `preference: ThemePreference` - User preference ('light', 'dark', or 'system')
+- `isDark: boolean` - Whether current mode is dark
+- `isLight: boolean` - Whether current mode is light
+- `isSystem: boolean` - Whether preference is 'system'
+- `setPreference(theme: ThemePreference): void` - Update preference
+- `toggle(): void` - Toggle between light and dark
+- `reset(): void` - Reset to system default
 
-1. Conceptual levels are mixed
+### `<ThemeProvider>`
 
-You jump like this:
-	•	“What is Context API?” (concept)
-	•	“Providing / Consuming Context” (mechanics)
-	•	“Class-Based Context” (implementation detail)
-	•	“Shopping Cart” (real app)
-	•	“Multi-Tenant SaaS” (architecture)
+Root component that initializes theme context.
 
-A beginner doesn’t know why they’re learning each step.
+**Props:**
+- `forceTheme?: ResolvedTheme` - Force a specific theme for nested override
 
-⸻
+### Types
 
-2. “Reactive Context Fundamentals / Patterns” is vague
+```typescript
+type ThemePreference = 'light' | 'dark' | 'system';
+type ResolvedTheme = 'light' | 'dark';
+```
 
-These titles don’t tell the reader:
-	•	What problem is being solved
-	•	What they’ll be able to build after
+## Styling
 
-Good learning paths are outcome-driven.
+Themes are applied via CSS custom properties on `[data-theme]`:
 
-⸻
+```css
+:root[data-theme='light'] {
+  --color-background: #ffffff;
+  --color-text: #1a1a1a;
+}
 
-3. “Class-Based Context” is misleading in Svelte 5
+:root[data-theme='dark'] {
+  --color-background: #1a1a1a;
+  --color-text: #ffffff;
+}
+```
 
-Context is not class-oriented by default, and emphasizing this early risks teaching the wrong abstraction.
+Components automatically inherit theme via CSS variables.
 
-Classes are an advanced technique, not a foundation.
+## Testing Locally
 
-⸻
+1. Toggle themes using the UI controls
+2. Open DevTools → Application → Local Storage to see persistence
+3. Change system preference to test 'system' mode
+4. Refresh page to verify no flash of wrong theme
+5. Check nested overrides on demo cards
 
-4. Use cases appear too early
+## Learn More
 
-Shopping cart, auth, SaaS should come after mental models are locked in.
+Read the full article: **[Theme System with Context](https://hackpile.chronicles)** on *The Hackpile Chronicles*
 
-⸻
+Topics covered:
+- Why context beats prop drilling for themes
+- Svelte 5 runes vs. stores for state management
+- SSR challenges and solutions
+- Cookie vs. localStorage trade-offs
+- Nested context patterns
 
-What a strong Context API learning path should do
+## Contributing
 
-Each section should answer one of these questions:
-	1.	What problem does this solve?
-	2.	When should I use it?
-	3.	How does this change how I design components?
+This is a companion demo—feel free to fork and experiment!
 
-⸻
+## License
 
-Recommended Structure (Beginner → Expert)
-
-This keeps Svelte-native thinking, avoids React terminology, and scales cleanly.
-
-⸻
-
-Level 1 — Foundations (Beginner)
-
-1. What Problem Does Context Solve?
-
-Why prop drilling breaks down
-When context is the right tool
-Context vs props (mentally, not code-heavy)
-
-⸻
-
-2. Providing Shared Data to Child Components
-
-setContext explained simply
-Where context should live
-What makes a good context value
-
-Mini example: theme or config
-
-⸻
-
-3. Reading Context in Nested Components
-
-getContext rules
-Why context is hierarchical
-What happens if context is missing
-
-Mini example: consuming config
-
-⸻
-
-Level 2 — Core Mechanics (Intermediate)
-
-4. Context Scope and Component Trees
-
-Deep nesting explained visually
-Why siblings cannot see each other
-Multiple contexts in one tree
-
-Diagram strongly recommended here
-
-⸻
-
-5. Making Context Reactive (Svelte 5 Way)
-
-Using $state() inside context
-Why reactivity belongs in the provider
-Avoiding overuse of $effect()
-
-Mini example: reactive counter or form state
-
-⸻
-
-6. Updating Shared State Through Context
-
-Read-only vs read-write context
-Passing actions instead of raw state
-Stability and API design
-
-This is where beginners usually get confused — explain slowly.
-
-⸻
-
-Level 3 — Design Patterns (Advanced)
-
-7. Context as a Feature Boundary
-
-Encapsulating logic + state
-Public vs private context shape
-Replacing “global stores” with scoped context
-
-⸻
-
-8. Compound Components Without Slots
-
-Tabs, accordions, menus
-Coordination through context
-Why this scales better than props
-
-Very Svelte-specific and very valuable.
-
-⸻
-
-9. Context Performance and Stability
-
-Why context is cheap
-What actually causes rerenders
-When context becomes a smell
-
-Short, sharp, opinionated section.
-
-⸻
-
-Level 4 — Real Systems (Expert)
-
-10. Theme Management with Context
-
-Multiple themes
-Overrides
-Server + client considerations
-
-⸻
-
-11. Authentication State with Context
-
-User identity vs permissions
-Layout-based context
-Avoiding “auth store hell”
-
-⸻
-
-12. Multi-Step Forms and Wizards
-
-Shared form state
-Step validation
-Navigation control
-
-This is a perfect context use case.
-
-⸻
-
-13. Shopping Cart as a Scoped System
-
-Why context beats global stores here
-Isolation per page or checkout flow
-Extensibility
-
-⸻
-
-14. Multi-Tenant SaaS Context Architecture
-
-Tenant isolation
-Per-request context
-Why this matters for correctness
-
-Expert-level, clearly marked as such.
-
-⸻
-
-Final Sections (Polish & Authority)
-
-15. Context Best Practices
-
-When NOT to use context
-Naming conventions
-Context keys and stability
-
-⸻
-
-16. Context vs Other Patterns in Svelte
-
-Context vs props
-Context vs stores
-Context vs module state
-
-This should be comparative, not defensive.
-
-⸻
-
-What I strongly recommend you change immediately
-	•	Rename “Reactive Context Fundamentals” → “Making Context Reactive”
-	•	Move class-based context into advanced patterns or remove entirely
-	•	Push shopping cart / SaaS into expert-only territory
-	•	Add diagrams around scope and hierarchy
-
-⸻
-
-If you want next steps
-
-I can:
-	•	Rewrite this into a final table of contents ready for publishing
-	•	Start writing section 1–3 fully in Markdown
-	•	Add ASCII diagrams that export cleanly to Markdown
-	•	Convert this into a course-style progression with checkpoints
-
-Just tell me how far you want to take it.
+MIT
