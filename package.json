@@ -6,7 +6,7 @@
 	"type": "module",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/stanskrivanek/svelte-theme-context-demo"
+		"url": "https://github.com/stanskrivanek/thc-svelte-theme-context-demo"
 	},
 	"keywords": [
 		"svelte",
